@@ -1,0 +1,11 @@
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+wordfreq
+torch
+transformers
+datasets
+accelerate
+sentencepiece
