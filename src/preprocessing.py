@@ -87,6 +87,13 @@ def tokenize(text, lower=True):
     return TOKEN_RE.findall(text)
 
 
+def clean_for_tfidf(text):
+    # "#vaccineswork" also gets "vaccineswork" so the hashtag and the plain
+    # word share weight
+    text = normalize(text).lower()
+    return re.sub(r"#(\w+)", r"#\1 \1", text)
+
+
 def word_tokens(text):
     return [t for t in tokenize(text) if t.isalpha()]
 
