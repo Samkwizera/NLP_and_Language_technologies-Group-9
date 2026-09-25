@@ -19,8 +19,8 @@ Everyone uses the same stratified 70/15/15 split of Train.csv (seed 42, saved in
 
 ## Running on Colab
 1. In Colab go to File > Open notebook > GitHub and search `Samkwizera/NLP_and_Language_technologies-Group-9`.
-2. Run the first cell. It clones the repo and installs the requirements.
-3. Upload `Train.csv` and `Test.csv` to the `data/` folder (see `data/README.md`).
+2. Put `Train.csv` and `Test.csv` in a Google Drive folder called `nlp_data` (in MyDrive). You only need to do this once.
+3. Run the first cell. It clones the repo, installs the requirements, mounts Drive and copies the csvs into `data/`.
 4. Run all. Use a GPU runtime for notebooks 03 and 04.
 
 ## Structure
