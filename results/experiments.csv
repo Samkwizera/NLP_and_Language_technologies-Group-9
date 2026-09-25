@@ -1,1 +1,18 @@
 exp_id,member,model,change,reason,macro_f1,accuracy,rmse,takeaway
+B1,Samuel,tfidf-word+logreg,word 1-2 grams only,simplest starting point,0.5816,0.7483,0.6719,"starting point, negative F1 only 0.18"
+B2,Samuel,tfidf-word+char+logreg,added char 2-5 grams,"half the vocab appears once, char n-grams should help with typos and rare words",0.6241,0.7623,0.6446,"char n-grams +0.04 macro-F1, negative F1 0.18 -> 0.28"
+B3,Samuel,tfidf-word+char+logreg,balanced class weights,negative is only 10% of the data,0.6733,0.7497,0.7043,"biggest gain, negative F1 0.45. accuracy and rmse a bit worse because it predicts more negatives"
+N1,Samuel,tfidf-word+char+nb,complement naive bayes,"nb is a common strong baseline for short text, complement nb handles imbalance better",0.6097,0.7304,0.701,"worse than logreg and svm, mostly on negative"
+S1,Samuel,tfidf-word+char+svm,linear svm instead of logreg,linear svms usually do well on sparse tf-idf features,0.6737,0.7597,0.6724,tied with logreg (0.674 vs 0.673)
+B4,Samuel,tfidf-word+char+logreg,tuned C=1.0,grid search on val macro-F1,0.6733,0.7497,0.7043,"default C=1 was already the best, same as B3"
+S2,Samuel,tfidf-word+char+svm,tuned C=0.1,grid search on val macro-F1,0.6737,0.7597,0.6724,"C=0.1 was already the best, same as S1. higher C overfits"
+A1,Samuel,tfidf-word+char+logreg,logreg: all training data,reference for the agreement runs,0.6733,0.7497,0.7043,"same as B3, reference for the agreement runs"
+A2,Samuel,tfidf-word+char+logreg,logreg: only agreement = 1,"cleaner labels, but loses ~63% of negatives",0.6851,0.7617,0.6634,"best logreg run (0.685, negative F1 0.48) even with 63% fewer negatives"
+A3,Samuel,tfidf-word+char+logreg,logreg: dropped agreement = 0.333,those tweets had no majority and were all defaulted to negative,0.6793,0.761,0.6729,small gain over all data (+0.006)
+A4,Samuel,tfidf-word+char+logreg,logreg: loss weighted by agreement,keep all data but trust uncertain labels less,0.6799,0.7617,0.6827,small gain over all data (+0.007)
+A5,Samuel,tfidf-word+char+svm,svm: all training data,reference for the agreement runs,0.6737,0.7597,0.6724,"same as S1, reference for the agreement runs"
+A6,Samuel,tfidf-word+char+svm,svm: only agreement = 1,"cleaner labels, but loses ~63% of negatives",0.6554,0.7583,0.6674,"hurts svm (-0.018), the opposite of logreg"
+A7,Samuel,tfidf-word+char+svm,svm: dropped agreement = 0.333,those tweets had no majority and were all defaulted to negative,0.6707,0.7663,0.6599,slightly worse than all data
+A8,Samuel,tfidf-word+char+svm,svm: loss weighted by agreement,keep all data but trust uncertain labels less,0.6741,0.767,0.6563,"tied with all data (+0.0004), picked as the final svm"
+BT1,Samuel,tfidf-word+char+logreg,final logreg on test (agreement=high),final evaluation of the best val config,0.6804,0.7458,0.681,"test 0.680, close to val (0.685) so no overfitting to val"
+BT2,Samuel,tfidf-word+char+svm,final svm on test (agreement=weighted),final evaluation of the best val config,0.6844,0.7465,0.6474,"best test score 0.684, negative F1 0.52"
