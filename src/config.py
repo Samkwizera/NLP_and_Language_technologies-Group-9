@@ -25,6 +25,11 @@ TEST_SIZE = 0.15
 SPLITS_DIR = ROOT / "splits"
 SPLIT_FILE = SPLITS_DIR / "split_seed42.csv"
 
+# rnn/cnn input: 99% of tweets are 33 tokens or fewer, half the vocab appears once
+MAX_LEN = 40
+MIN_FREQ = 2
+EMBEDDINGS_DIR = DATA_DIR / "embeddings"
+
 RESULTS_DIR = ROOT / "results"
 FIGURES_DIR = RESULTS_DIR / "figures"
 ERRORS_DIR = RESULTS_DIR / "errors"
