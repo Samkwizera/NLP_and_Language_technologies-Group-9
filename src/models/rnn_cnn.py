@@ -240,6 +240,7 @@ def run_or_load(exp_id, train_df, val_df, eval_df=None, retrain=False, **kwargs)
                    "settings": settings, "metrics": run["metrics"],
                    "history": run["history"], "preds": run["preds"].tolist(),
                    "probs": np.round(run["probs"], 4).tolist()}, f)
+    run["settings"] = settings
     return run
 
 
