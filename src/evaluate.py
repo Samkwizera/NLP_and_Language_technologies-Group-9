@@ -49,6 +49,28 @@ def plot_learning_curve(sizes, train_scores, val_scores, title, name=None):
     plt.show()
 
 
+def plot_training_history(history, title, name=None):
+    # per-epoch curves for the neural models: where it starts to overfit and where
+    # early stopping picked the weights
+    h = pd.DataFrame(history)
+    best = h.loc[h["val_macro_f1"].idxmax(), "epoch"]
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4))
+    axes[0].plot(h["epoch"], h["train_loss"], "o-", label="train")
+    axes[0].plot(h["epoch"], h["val_loss"], "o-", label="val")
+    axes[0].set_ylabel("cross-entropy loss")
+    axes[1].plot(h["epoch"], h["val_macro_f1"], "o-", color="C2")
+    axes[1].set_ylabel("val macro-F1")
+    for ax in axes:
+        ax.axvline(best, color="grey", ls="--", lw=1)
+        ax.set_xlabel("epoch")
+    axes[0].legend()
+    fig.suptitle(f"{title} (dashed line = kept epoch)")
+    plt.tight_layout()
+    if name:
+        plt.savefig(config.FIGURES_DIR / f"{name}.png", dpi=150, bbox_inches="tight")
+    plt.show()
+
+
 def export_errors(df, y_pred, confidence, exp_id):
     out = pd.DataFrame({
         config.ID_COL: df[config.ID_COL].values,

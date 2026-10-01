@@ -1,0 +1,6 @@
+model,fraction,train_tweets,val_macro_f1
+logreg,0.1,699,0.581
+logreg,0.25,1748,0.6192
+logreg,0.5,3496,0.6375
+logreg,0.75,5247,0.6622
+logreg,1.0,6995,0.6733

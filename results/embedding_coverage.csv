@@ -1,0 +1,3 @@
+embedding,vocab_min_freq_2,vocab_with_rare_kept,vocab_with_vector,tokens_with_vector,missing_placeholders
+glove,5319,10287,0.892,0.9481,-
+fasttext,5319,10507,0.9408,0.9239,<user> <url> <hashtag>
