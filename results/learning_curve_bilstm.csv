@@ -1,0 +1,6 @@
+model,fraction,train_tweets,val_macro_f1
+bilstm,0.1,699,0.4863
+bilstm,0.25,1748,0.5957
+bilstm,0.5,3496,0.6189
+bilstm,0.75,5247,0.6217
+bilstm,1.0,6995,0.6697
