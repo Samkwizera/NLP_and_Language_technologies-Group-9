@@ -15,6 +15,7 @@ from src.models.baselines import agreement_subset
 from src.utils import log_experiment, set_seed
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+RUNS_DIR = config.RESULTS_DIR / "runs"
 
 
 def make_embedding(vocab_size, dim, matrix=None, freeze=False):
@@ -217,12 +218,9 @@ def run_experiment(exp_id, train_df, val_df, eval_df=None, model="bilstm", embed
             "probs": probs, "metrics": metrics, "history": history}
 
 
-RUNS_DIR = config.RESULTS_DIR / "runs"
-
-
 def run_or_load(exp_id, train_df, val_df, eval_df=None, retrain=False, **kwargs):
-    # a bilstm run takes ~5 min on a laptop cpu, so every finished run is saved and
-    # reloaded next time. retrain=True reruns it (a few seconds each on a colab gpu)
+    # a bilstm run takes 10-20 min on a laptop cpu, so every finished run is saved and
+    # reloaded next time. retrain=True trains it again (much faster on a colab gpu)
     path = RUNS_DIR / f"{exp_id}.json"
     if path.exists() and not retrain:
         with open(path, encoding="utf-8") as f:
@@ -241,6 +239,7 @@ def run_or_load(exp_id, train_df, val_df, eval_df=None, retrain=False, **kwargs)
                    "history": run["history"], "preds": run["preds"].tolist(),
                    "probs": np.round(run["probs"], 4).tolist()}, f)
     run["settings"] = settings
+    run["change"] = kwargs.get("change", "")
     return run
 
 
